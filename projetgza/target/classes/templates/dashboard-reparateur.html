@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Dashboard Réparateur</title>
+  <meta charset="UTF-8">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+<div class="container mt-4">
+
+  <h2>👨‍🔧 Dashboard du Réparateur</h2>
+
+  <!-- Bouton nouvelle réparation -->
+  <div class="my-3">
+    <a href="/reparations/choix" class="btn btn-primary">➕ Nouvelle réparation</a>
+    <a href="/emprunts/new" class="btn btn-success">➕ Ajouter emprunt/remboursement</a>
+  </div>
+
+  <!-- Tableau des réparations -->
+  <div class="card mb-4">
+    <div class="card-header bg-secondary text-white">🛠 Mes réparations</div>
+    <div class="card-body p-0">
+      <table class="table table-hover">
+        <thead>
+        <tr>
+          <th>Code</th>
+          <th>Date début</th>
+          <th>Date fin</th>
+          <th>Montant</th>
+          <th>Avance</th>
+          <th>Reste</th>
+          <th>Status</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="rep : ${reparations}">
+          <td th:text="${rep.codeSuivi}">code</td>
+          <td th:text="${#dates.format(rep.dateDebut, 'dd/MM/yyyy')}">début</td>
+          <td th:text="${rep.dateFin != null ? #dates.format(rep.dateFin, 'dd/MM/yyyy') : '---'}">fin</td>
+          <td th:text="${rep.coutTotal} + ' DH'">0</td>
+          <td th:text="${rep.avance} + ' DH'">0</td>
+          <td th:text="${rep.reste} + ' DH'">0</td>
+          <td th:text="${rep.status}">statut</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Tableau des emprunts -->
+  <div class="card mb-4">
+    <div class="card-header bg-warning">💰 Mes emprunts</div>
+    <div class="card-body p-0">
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th>Montant</th>
+          <th>Type</th>
+          <th>Détails</th>
+          <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="e : ${emprunts}">
+          <td th:text="${e.montant} + ' DH'">montant</td>
+          <td>
+            <span th:text="${e.isemprunt ? 'Emprunt' : 'Remboursement'}"
+                  th:classappend="${e.isemprunt} ? 'text-danger' : 'text-success'">
+              Type
+            </span>
+          </td>
+          <td th:text="${e.details}">détails</td>
+          <td>
+            <!-- Si non réglé : bouton régler -->
+            <form th:if="${e.emp.name() == 'NON_REGLE'}" th:action="@{/emprunts/regler}" method="post"
+                  onsubmit="return confirm('Confirmer le règlement de cette opération ?');">
+              <input type="hidden" name="id" th:value="${e.id}" />
+              <button type="submit" class="btn btn-sm btn-success">✔ Régler</button>
+            </form>
+            <!-- Si déjà réglé : texte -->
+            <span th:if="${e.emp.name() == 'REGLE'}" class="text-success">✅ Réglé</span>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="card mb-4">
+    <div class="card-header bg-success text-white">📈 Mes recettes</div>
+    <div class="card-body">
+      <p><strong>Total : </strong> <span th:text="${totalRecettes} + ' DH'">0</span></p>
+
+      <table class="table table-sm">
+        <thead>
+        <tr>
+          <th>Date</th>
+          <th>Montant</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="r : ${recettes}">
+          <td th:text="${#dates.format(r.date, 'dd/MM/yyyy')}">01/01/2024</td>
+          <span th:text="${totalRecettes != null ? totalRecettes : 0} + ' DH'">0</span>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

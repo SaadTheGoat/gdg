@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Nouvelle réparation - Étape 1</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+<div class="container mt-4">
+    <h2>Nouvelle réparation – Étape 1 : Informations des appareils</h2>
+
+    <!-- Formulaire vers étape 2 -->
+    <form th:action="@{/reparations/suivant}" method="post" th:object="${reparation}">
+
+        <!-- Bloc d’un appareil -->
+        <div th:each="appareil, stat : *{appareils}" class="card mb-3 p-3">
+            <h5>Appareil <span th:text="${stat.index + 1}">1</span></h5>
+
+            <div class="mb-2">
+                <input type="text" th:field="*{appareils[__${stat.index}__].type}" class="form-control" placeholder="Type" required>
+            </div>
+            <div class="mb-2">
+                <input type="text" th:field="*{appareils[__${stat.index}__].marque}" class="form-control" placeholder="Marque" required>
+            </div>
+            <div class="mb-2">
+                <input type="text" th:field="*{appareils[__${stat.index}__].modele}" class="form-control" placeholder="Modèle" required>
+            </div>
+            <div class="mb-2">
+                <input type="text" th:field="*{appareils[__${stat.index}__].cause}" class="form-control" placeholder="Cause de réparation" required>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Suivant</button>
+    </form>
+</div>
+</body>
+</html>

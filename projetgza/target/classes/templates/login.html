@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Connexion</title>
+  <meta charset="UTF-8">
+</head>
+<body>
+<h2>🔐 Connexion</h2>
+
+<form th:action="@{/login}" th:object="${reparateur}" method="post">
+  <div>
+    <input type="email" th:field="*{email}" placeholder="Email" required />
+  </div>
+  <div>
+    <input type="password" th:field="*{mdp}" placeholder="Mot de passe" required />
+  </div>
+  <div>
+    <label>Je suis :</label>
+    <select th:field="*{role}" required>
+      <option value="" disabled selected>Choisir...</option>
+      <option value="REPARATEUR">Réparateur</option>
+      <option value="PROPRIETAIRE">Propriétaire</option>
+    </select>
+  </div>
+  <div>
+    <button type="submit">Se connecter</button>
+  </div>
+</form>
+
+<div th:if="${error}">
+  <p th:text="${error}" style="color:red;"></p>
+</div>
+</body>
+</html>

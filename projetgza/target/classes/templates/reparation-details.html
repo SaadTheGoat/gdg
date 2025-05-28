@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Nouvelle réparation - Étape 2</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+<div class="container mt-4">
+  <h2>Nouvelle réparation – Étape 2 : Détails financiers</h2>
+
+  <form th:action="@{/reparations/save}" method="post" th:object="${reparation}">
+
+    <!-- Champs cachés pour chaque appareil -->
+    <div th:each="appareil, stat : *{appareils}" th:remove="tag">
+      <input type="hidden" th:field="*{appareils[__${stat.index}__].type}" />
+      <input type="hidden" th:field="*{appareils[__${stat.index}__].marque}" />
+      <input type="hidden" th:field="*{appareils[__${stat.index}__].modele}" />
+      <input type="hidden" th:field="*{appareils[__${stat.index}__].cause}" />
+    </div>
+
+    <div class="mb-3">
+      <label>Montant total</label>
+      <input type="number" step="0.01" th:field="*{coutTotal}" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+      <label>Avance</label>
+      <input type="number" step="0.01" th:field="*{avance}" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="dateFin" class="form-label">Date de fin</label>
+      <input type="date" th:field="*{dateFin}" class="form-control" id="dateFin">
+    </div>
+
+    <!-- Champ réparateur automatique -->
+    <div class="mb-3">
+      <label>Réparateur</label>
+      <input type="text"
+             th:value="${session.user.nom + ' ' + session.user.prenom}"
+             class="form-control"
+             readonly />
+      <input type="hidden" th:field="*{reparateur.id}" th:value="${session.user.id}" />
+    </div>
+
+
+    <button type="submit" class="btn btn-success">Créer la réparation</button>
+  </form>
+</div>
+</body>
+</html>
