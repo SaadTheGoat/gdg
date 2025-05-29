@@ -9,7 +9,9 @@ import java.util.Optional;
 
 @Repository
 public interface RecetteRepositorie extends JpaRepository<Recette , Long> {
+    List<Recette> findByReparateur_Id(Long reparateurId);
 
+    Optional<Recette> findByReparationId(Long id);
 
 
 }

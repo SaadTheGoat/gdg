@@ -8,4 +8,5 @@ import java.util.List;
 
 @Repository
 public interface EmpruntRepositorie extends JpaRepository<Emprunt , Long> {
+    List<Emprunt> findByReparateur_Id(Long reparateurId);
 }

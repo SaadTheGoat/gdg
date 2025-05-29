@@ -9,5 +9,6 @@ import java.util.Optional;
 
 @Repository
 public interface ReparateurRepositorie extends JpaRepository<Reparateur , Long> {
-
+    Optional<Reparateur> findByEmail(String email);
+    Optional<Reparateur> findByRole(Role role);
 }

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Changer le mot de passe</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+<div class="container mt-5">
+  <h2>🔒 Changer votre mot de passe</h2>
+  <form th:action="@{/changer-motdepasse}" method="post" th:object="${reparateur}">
+    <div class="mb-3">
+      <label>Nouveau mot de passe</label>
+      <input type="password" th:field="*{mdp}" class="form-control" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Valider</button>
+  </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Détails de la réparation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center px-4">
+
+<div class="bg-white shadow-lg rounded-lg p-8 w-full max-w-2xl">
+    <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Détails de la réparation</h2>
+
+    <div class="space-y-4">
+        <div>
+            <strong class="text-gray-700">ID :</strong>
+            <span th:text="${reparation.id}">1</span>
+        </div>
+        <div>
+            <strong class="text-gray-700">Coût total :</strong>
+            <span th:text="${reparation.coutTotal} + ' DH'">0.00</span>
+        </div>
+        <div>
+            <strong class="text-gray-700">Avance :</strong>
+            <span th:text="${reparation.avance} + ' DH'">0.00</span>
+        </div>
+        <div>
+            <strong class="text-gray-700">Date de fin :</strong>
+            <span th:text="${#temporals.format(reparation.dateFin, 'dd/MM/yyyy')}">Date</span>
+        </div>
+        <div>
+            <strong class="text-gray-700">Réparateur :</strong>
+            <span th:text="${reparation.reparateur.nom + ' ' + reparation.reparateur.prenom}">Nom complet</span>
+        </div>
+    </div>
+
+    <div class="mt-6">
+        <h3 class="text-lg font-semibold text-gray-800 mb-2">Appareils concernés :</h3>
+        <ul class="space-y-2">
+            <li th:each="appareil : ${reparation.appareils}" class="border p-3 rounded bg-gray-50">
+                <div><strong>Type :</strong> <span th:text="${appareil.type}">Type</span></div>
+                <div><strong>Marque :</strong> <span th:text="${appareil.marque}">Marque</span></div>
+                <div><strong>Modèle :</strong> <span th:text="${appareil.modele}">Modèle</span></div>
+                <div><strong>Cause :</strong> <span th:text="${appareil.cause}">Cause</span></div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="mt-6 text-center">
+        <a href="/reparations" class="text-blue-600 hover:underline text-sm">← Retour à la liste des réparations</a>
+    </div>
+</div>
+
+</body>
+</html>

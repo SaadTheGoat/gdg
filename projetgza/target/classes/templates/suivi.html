@@ -1,0 +1,30 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Suivi Réparation</title>
+    <script src="https://cdn.tailwindcss.com "></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+
+<div class="max-w-md w-full bg-white p-8 rounded shadow text-center">
+    <h1 class="text-2xl font-bold mb-6">Suivi de votre réparation</h1>
+
+    <form th:action="@{/suivi}" method="post" class="space-y-4">
+        <input type="text" name="codeSuivi" placeholder="Entrez votre code de suivi"
+               class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
+
+        <button type="submit"
+                class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded transition">
+            Rechercher
+        </button>
+
+        <!-- Message d'erreur -->
+        <div th:if="${error}" class="mt-4 p-3 bg-red-100 text-red-800 rounded">
+            [[${error}]]
+        </div>
+</div>
+
+</body>
+</html>
